@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "TabWise - Tab Organizer",
+    "version": "1.0.0",
+    "description": "Organize, summarize, and categorize your open tabs effortlessly.",
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/tabWise.png",
+            "48": "images/tabWise.png",
+            "128": "images/tabWise.png"
+        }
+    },
+    "permissions": [
+        "tabs", 
+        "activeTab", 
+        "scripting", 
+        "storage"
+    ],
+    "icons": {
+        "16": "images/tabWise.png",
+        "48": "images/tabWise.png",
+        "128": "images/tabWise.png"
+    }
+}
