@@ -1,25 +1,62 @@
+<!-- popup.html -->
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./popup.css" />
-  </head>
-  <body>
-    <template id="li_template">
-      <li>
-        <a>
-          <h3 class="title">Tab Title</h3>
-          <p class="pathname">Tab Pathname</p>
-        </a>
-      </li>
-    </template>
-
-    <h1>Google Dev Docs</h1>
-    <button>Group Tabs</button>
-    <ul></ul>
-
-    <script src="./popup.js" type="module"></script>
-  </body>
+<html>
+<head>
+  <title>TabWise</title>
+  <style>
+    body {
+      width: 400px;
+      padding: 16px;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    
+    .tab-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    
+    .category {
+      display: inline-block;
+      background: #e3f2fd;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    
+    .confidence {
+      color: #666;
+      font-size: 12px;
+      margin-left: 8px;
+    }
+    
+    .explanation {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #444;
+    }
+    
+    .summary {
+      margin-top: 8px;
+      font-style: italic;
+      color: #666;
+    }
+    
+    .timestamp {
+      font-size: 11px;
+      color: #888;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="current-tab"></div>
+  <script src="popup.js"></script>
+</body>
 </html>

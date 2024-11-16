@@ -3,7 +3,6 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import logging
-import re
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -34,7 +33,7 @@ CATEGORY_KEYWORDS = {
     "Healthcare": ["health", "medical", "wellness", "patient", "doctor", "treatment", "diagnosis", "hospital", "clinic", "pharmacy", "medicine", "prescription", "Healthcare"],
     "Communication": ["chat", "message", "communication", "contact", "connect"],
     "News": ["news", "articles", "updates", "information", "current events", "newsletter", "journalism", "reporting", "breaking news"],
-    "Education": ["learning", "teaching", "education", "students", "teachers", "courses", "classes", "tutorials", "lessons", "curriculum"],
+    "Education": ["learning", "learn","teaching", "education", "students", "teachers", "courses", "classes", "tutorials", "lessons", "curriculum"],
     "Finance": ["finance", "investment", "banking", "money", "stocks", "trading", "economy", "financial"],
     "Travel": ["travel", "tourism", "destination", "vacation", "trip", "hotel", "flight", "booking", "reservations"],
     "Food": ["food", "restaurant", "cuisine", "recipe", "cooking", "dining", "menu", "ingredients", "meal"],
