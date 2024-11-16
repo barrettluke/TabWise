@@ -91,6 +91,11 @@ def generate():
             "Entertainment": "This text relates to entertainment content.",
             "Healthcare": "This text involves health-related services.",
             "Communication": "This text describes communication features.",
+            "News": "This text involves news articles or updates.",
+            "Education": "This text relates to educational content or learning resources.",
+            "Finance": "This text involves financial services or investment information.",
+            "Travel": "This text describes travel or tourism services.",
+            "Food": "This text relates to food, recipes, or dining experiences.",
             "Other": "This text doesn't clearly match our predefined categories."
         }
         
