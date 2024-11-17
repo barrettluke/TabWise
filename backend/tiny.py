@@ -23,20 +23,21 @@ else:
 
 # Define categories with keywords
 CATEGORY_KEYWORDS = {
-    "E-commerce/Marketplace": ["marketplace", "buyers", "sellers", "shop", "store", "purchase", "sell", "buy", "auction", "bid", "listing", "e-commerce", "sale"],
+    "E-commerce/Marketplace": ["marketplace", "buyers", "sellers", "shop", "store", "purchase", "sell", "buy", "auction", "bid", "listing", "e-commerce", "sale", "spend"],
     "Technology/IoT": ["GPS", "tracking", "device", "sensor", "IoT", "real-time", "hardware", "monitor"],
-    "Weather/Climate": ["weather", "climate", "forecast", "meteorological", "atmospheric", "prediction", "satellite"],
+    "Weather/Climate": ["weather", "climate", "forecast", "meteorological", "atmospheric", "prediction", "satellite", "temperature", "humidity", "precipitation", "weather patterns"],
     "Blockchain/Crypto": ["blockchain", "crypto", "NFT", "token", "mint", "cryptocurrency", "decentralized", "ledger", "smart contract", "digital asset", "wallet", "miners", "cryptocurrencies"],
     "Social Media": ["social", "posts", "sharing", "friends", "network", "community"],
     "Productivity": ["workflow", "efficiency", "tools", "organization", "tasks", "management"],
     "Entertainment": ["games", "music", "video", "streaming", "play", "watch"],
     "Healthcare": ["health", "medical", "wellness", "patient", "doctor", "treatment", "diagnosis", "hospital", "clinic", "pharmacy", "medicine", "prescription", "Healthcare"],
     "Communication": ["chat", "message", "communication", "contact", "connect"],
-    "News": ["news", "articles", "updates", "information", "current events", "newsletter", "journalism", "reporting", "breaking news"],
+    "News": ["news", "articles", "updates", "information", "current events", "newsletter", "journalism", "reporting", "breaking news", "News"],
     "Education": ["learning", "learn","teaching", "education", "students", "teachers", "courses", "classes", "tutorials", "lessons", "curriculum"],
     "Finance": ["finance", "investment", "banking", "money", "stocks", "trading", "economy", "financial"],
     "Travel": ["travel", "tourism", "destination", "vacation", "trip", "hotel", "flight", "booking", "reservations"],
     "Food": ["food", "restaurant", "cuisine", "recipe", "cooking", "dining", "menu", "ingredients", "meal"],
+    "Space/Aerospace": ["satellite", "space", "orbit", "launch", "rocket", "spacecraft", "astronomical", "aerospace", "constellation", "celestial", "planetary", "mission", "astronomy"]
 }
 
 def classify_text(text):

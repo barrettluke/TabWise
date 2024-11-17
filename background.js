@@ -6,7 +6,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
 // Store tab states and categorized data
 let tabStates = new Map();
-let categorizedTabs = new Map();  // New: Store categorization results
+let categorizedTabs = new Map();
 
 class TabState {
   constructor() {
@@ -102,15 +102,16 @@ async function categorizeTab(tabId, tab) {
     categorizedTabs.set(tabId, tabData);
     
     // Store in chrome.storage
-    chrome.storage.local.set({ [tabId]: tabData });
+    await chrome.storage.local.set({ [tabId]: tabData });
     
-    // Notify popup if it's open
+    // Send message with simplified error handling
     chrome.runtime.sendMessage({
       type: 'TAB_CATEGORIZED',
       data: tabData,
       tabId: tabId
-    }).catch((error) => {
-      console.error("Message sending failed:", error);
+    }).catch(() => {
+      // Silently ignore messaging errors
+      // This happens normally when popup is closed
     });
     
   } catch (error) {
@@ -148,13 +149,15 @@ async function getCategory(text) {
   }
 }
 
-// Listen for messages from popup
+// Listen for messages from popup using async messaging pattern
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'GET_CURRENT_TAB_DATA') {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs[0]) {
         const tabData = categorizedTabs.get(tabs[0].id);
         sendResponse({ data: tabData || null });
+      } else {
+        sendResponse({ data: null });
       }
     });
     return true; // Will respond asynchronously
