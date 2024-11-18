@@ -1,23 +1,18 @@
 // popup.js
 
-// Function to create a card for a tab's data
 function createTabCard(tabData) {
-    // Convert summary into an unordered list if applicable
     let summaryHtml = tabData.summary
-        .split('\n') // Split summary by newlines
+        .split('\n')
         .map(line => {
             if (line.startsWith('*')) {
-                // For lines starting with '*', remove the initial '*' and any other '*' in the line
                 const cleanContent = line.substring(1).trim().replace(/\*/g, '');
                 return `<li>${cleanContent}</li>`;
             }
-            // For other lines, just remove any '*' characters
             return line.replace(/\*/g, '');
         })
-        .filter(line => line.length > 0) // Remove empty lines
+        .filter(line => line.length > 0)
         .join('');
 
-    // Wrap in <ul> if there are any <li> items
     summaryHtml = summaryHtml.includes('<li>') ? `<ul>${summaryHtml}</ul>` : summaryHtml;
 
     return `
@@ -33,114 +28,118 @@ function createTabCard(tabData) {
         </div>
     `;
 }
-  
-  function groupTabsByCategory(tabs, storedData) {
+
+function groupTabsByCategory(tabs, storedData) {
     const groups = {};
     tabs.forEach((tab) => {
-      const tabId = tab.id.toString();
-      if (storedData[tabId] && storedData[tabId].category) {
-        const category = storedData[tabId].category;
-        if (!groups[category]) {
-          groups[category] = [];
+        const tabId = tab.id.toString();
+        if (storedData[tabId] && storedData[tabId].category) {
+            const category = storedData[tabId].category;
+            if (!groups[category]) {
+                groups[category] = [];
+            }
+            groups[category].push({ ...storedData[tabId], tab });
         }
-        groups[category].push({ ...storedData[tabId], tab });
-      }
     });
     return groups;
-  }
-  
-  function createGroupCard(category, groupTabs) {
+}
+
+function createGroupCard(category, groupTabs) {
+    const isCollapsed = localStorage.getItem(`category-${category}-collapsed`) === 'true';
+    const contentDisplay = isCollapsed ? 'none' : 'block';
+
     return `
-      <div class="group-card" data-category="${category}">
-        <h3>${category}</h3>
-        ${groupTabs.map(createTabCard).join('')}
-      </div>
+        <div class="group-card" data-category="${category}">
+            <div class="category-header">
+                <svg class="collapse-icon ${isCollapsed ? 'collapsed' : ''}" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 6L8 11L13 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h3>${category} (${groupTabs.length})</h3>
+            </div>
+            <div class="category-content" style="display: ${contentDisplay}">
+                ${groupTabs.map(createTabCard).join('')}
+            </div>
+        </div>
     `;
-  }
-  
-  function updatePopup(forceRefresh = false) {
+}
+
+function updatePopup(forceRefresh = false) {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
-      const container = document.getElementById('current-tab');
-      
-      chrome.storage.local.get(null, (storedData) => {
-        const groupedTabs = groupTabsByCategory(tabs, storedData);
-        
-        if (Object.keys(groupedTabs).length === 0) {
-          container.innerHTML = '<p>No categorized tabs available.</p>';
-          return;
-        }
-  
-        if (forceRefresh) {
-          // Complete refresh of all content
-          container.innerHTML = Object.entries(groupedTabs)
-            .map(([category, groupTabs]) => createGroupCard(category, groupTabs))
-            .join('');
-        } else {
-          // Update existing cards or add new ones
-          Object.entries(groupedTabs).forEach(([category, groupTabs]) => {
-            const existingGroup = container.querySelector(`[data-category="${category}"]`);
-            if (existingGroup) {
-              // Update existing group
-              existingGroup.innerHTML = createGroupCard(category, groupTabs)
-                .replace(/<div class="group-card"[^>]*>/, '')
-                .replace(/<\/div>$/, '');
+        const container = document.getElementById('current-tab');
+
+        chrome.storage.local.get(null, (storedData) => {
+            const groupedTabs = groupTabsByCategory(tabs, storedData);
+
+            if (Object.keys(groupedTabs).length === 0) {
+                container.innerHTML = '<p>No categorized tabs available.</p>';
+                return;
+            }
+
+            if (forceRefresh) {
+                container.innerHTML = Object.entries(groupedTabs)
+                    .map(([category, groupTabs]) => createGroupCard(category, groupTabs))
+                    .join('');
             } else {
-              // Add new group
-              container.insertAdjacentHTML('beforeend', createGroupCard(category, groupTabs));
+                Object.entries(groupedTabs).forEach(([category, groupTabs]) => {
+                    const existingGroup = container.querySelector(`[data-category="${category}"]`);
+                    if (existingGroup) {
+                        const content = existingGroup.querySelector('.category-content');
+                        const isCollapsed = content.style.display === 'none';
+                        existingGroup.outerHTML = createGroupCard(category, groupTabs);
+                        if (isCollapsed) {
+                            const newGroup = container.querySelector(`[data-category="${category}"]`);
+                            const newContent = newGroup.querySelector('.category-content');
+                            const newIcon = newGroup.querySelector('.collapse-icon');
+                            newContent.style.display = 'none';
+                            newIcon.classList.add('collapsed');
+                        }
+                    } else {
+                        container.insertAdjacentHTML('beforeend', createGroupCard(category, groupTabs));
+                    }
+                });
+
+                container.querySelectorAll('.group-card').forEach(groupEl => {
+                    const category = groupEl.dataset.category;
+                    if (!groupedTabs[category]) {
+                        groupEl.remove();
+                    }
+                });
             }
-          });
-  
-          // Remove empty categories
-          container.querySelectorAll('.group-card').forEach(groupEl => {
-            const category = groupEl.dataset.category;
-            if (!groupedTabs[category]) {
-              groupEl.remove();
-            }
-          });
-        }
-      });
+
+            setupEventListeners();
+        });
     });
-  }
-  
-  // Listen for live updates from background script
-  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.type === 'TAB_CATEGORIZED') {
-      // Debounce the update to avoid too frequent refreshes
-      if (window.updateTimeout) {
-        clearTimeout(window.updateTimeout);
-      }
-      window.updateTimeout = setTimeout(() => {
-        updatePopup(false);
-      }, 100);
-    }
-    // Always send a response
-    sendResponse({ received: true });
-    return true;
-  });
-  
-  // Initial update when popup opens
-  document.addEventListener('DOMContentLoaded', () => {
+}
+
+function setupEventListeners() {
+    document.querySelectorAll('.category-header').forEach(header => {
+        header.removeEventListener('click', handleCategoryClick); // Remove old listener
+        header.addEventListener('click', handleCategoryClick); // Add new listener
+    });
+}
+
+function handleCategoryClick(event) {
+    const groupCard = event.currentTarget.closest('.group-card');
+    const category = groupCard.dataset.category;
+    const content = groupCard.querySelector('.category-content');
+    const icon = groupCard.querySelector('.collapse-icon');
+    
+    const isCollapsed = content.style.display !== 'none';
+    content.style.display = isCollapsed ? 'none' : 'block';
+    icon.classList.toggle('collapsed');
+    
+    localStorage.setItem(`category-${category}-collapsed`, isCollapsed.toString());
+}
+
+// Initial load and event listeners
+document.addEventListener('DOMContentLoaded', () => {
     updatePopup(true);
     
-    // Set up periodic refresh
     const refreshInterval = setInterval(() => {
-      updatePopup(false);
+        updatePopup(false);
     }, 5000);
-  
-    // Clear interval when popup closes
+
     window.addEventListener('unload', () => {
-      clearInterval(refreshInterval);
+        clearInterval(refreshInterval);
     });
-  });
-  
-  // Add error handling for the container
-  window.addEventListener('error', (event) => {
-    const container = document.getElementById('current-tab');
-    container.innerHTML = `
-      <div class="error-message">
-        <p>An error occurred while updating the display.</p>
-        <button onclick="updatePopup(true)">Retry</button>
-      </div>
-    `;
-    console.error('Popup error:', event.error);
-  });
+});

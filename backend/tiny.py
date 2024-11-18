@@ -23,7 +23,7 @@ else:
 
 # Define categories with keywords
 CATEGORY_KEYWORDS = {
-    "E-commerce/Marketplace": ["marketplace", "buyers", "sellers", "shop", "store", "purchase", "sell", "buy", "auction", "bid", "listing", "e-commerce", "sale", "spend"],
+    "E-commerce/Marketplace": ["marketplace", "buyers", "sellers", "shop", "store", "purchase", "sell", "buy", "auction", "bid", "listing", "e-commerce", "sale", "spend", "marketing"],
     "Technology/IoT": ["GPS", "tracking", "device", "sensor", "IoT", "real-time", "hardware", "monitor"],
     "Weather/Climate": ["weather", "climate", "forecast", "meteorological", "atmospheric", "prediction", "satellite", "temperature", "humidity", "precipitation", "weather patterns"],
     "Blockchain/Crypto": ["blockchain", "crypto", "NFT", "token", "mint", "cryptocurrency", "decentralized", "ledger", "smart contract", "digital asset", "wallet", "miners", "cryptocurrencies"],
@@ -37,7 +37,9 @@ CATEGORY_KEYWORDS = {
     "Finance": ["finance", "investment", "banking", "money", "stocks", "trading", "economy", "financial"],
     "Travel": ["travel", "tourism", "destination", "vacation", "trip", "hotel", "flight", "booking", "reservations"],
     "Food": ["food", "restaurant", "cuisine", "recipe", "cooking", "dining", "menu", "ingredients", "meal"],
-    "Space/Aerospace": ["satellite", "space", "orbit", "launch", "rocket", "spacecraft", "astronomical", "aerospace", "constellation", "celestial", "planetary", "mission", "astronomy"]
+    "Space/Aerospace": ["satellite", "space", "orbit", "launch", "rocket", "spacecraft", "astronomical", "aerospace", "constellation", "celestial", "planetary", "mission", "astronomy"],
+    "Sports": ["sports", "game", "match", "team", "player", "score", "tournament", "championship", "league", "athletes", "competition", "Sports", "athletics", "playoffs", "players"],
+
 }
 
 def classify_text(text):
@@ -97,6 +99,8 @@ def generate():
             "Finance": "This text involves financial services or investment information.",
             "Travel": "This text describes travel or tourism services.",
             "Food": "This text relates to food, recipes, or dining experiences.",
+            "Space/Aerospace": "This text involves space exploration or aerospace technology.",
+            "Sports": "This text describes sports events or competitions.",
             "Other": "This text doesn't clearly match our predefined categories."
         }
         
