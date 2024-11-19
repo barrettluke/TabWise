@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "description": "Organize, summarize, and categorize your open tabs effortlessly.",
     "action": {
-        "default_popup": "popup.html",
+        "default_popup": "popup/popup.html",
         "default_icon": {
             "16": "images/tabWise.png",
             "48": "images/tabWise.png",

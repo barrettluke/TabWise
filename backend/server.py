@@ -62,7 +62,7 @@ def classify_text(text):
 
 try:
     logger.info("Starting to load model...")
-    model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+    model_name = "backend/models/tinyllama"
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
