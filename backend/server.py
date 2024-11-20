@@ -1,14 +1,30 @@
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from ctransformers import AutoModelForCausalLM
 from flask import Flask, request, jsonify
+from pathlib import Path
 from flask_cors import CORS
 import logging
+from utils.model_manager import ModelManager
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
+
+
+# Initialize the ModelManager
+manager = ModelManager(
+    models_dir="./models",  # Where models will be stored
+    cache_dir="./cache",    # Where model cache will be stored
+    max_cache_size_gb=4.0   # Maximum size of model cache
+)
+
+# Ensure all required models are downloaded
+# This will download TinyLlama if it's not already present
+success = manager.ensure_models()
+if not success:
+    raise RuntimeError("Failed to download required models")
 
 # Determine the best device
 if torch.backends.mps.is_available():
@@ -53,22 +69,50 @@ def classify_text(text):
             matches[category] = count
     
     if matches:
-        # Get category with most keyword matches
         best_category = max(matches.items(), key=lambda x: x[1])
         confidence = "High" if best_category[1] > 1 else "Medium"
         return best_category[0], confidence
     
     return "Other", "Low"
 
+# Initialize model with ctransformers
 try:
     logger.info("Starting to load model...")
-    model_name = "backend/models/tinyllama"
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(
-        model_name,
-        torch_dtype=torch.float32,
-        low_cpu_mem_usage=True
-    ).to(device)
+    model_path = Path("./models/tinyllama")  # Path to your downloaded GGUF file
+    
+    # For Mac with Metal support
+    if torch.backends.mps.is_available():
+        logger.info("Using MPS (Apple Silicon) device")
+        model = AutoModelForCausalLM.from_pretrained(
+            str(model_path),
+            model_type="llama",
+            gpu_layers=50,  # Adjust based on your needs
+            context_length=2048,
+            temperature=0.7,
+            top_p=0.95
+        )
+    # For CUDA
+    elif torch.cuda.is_available():
+        logger.info("Using CUDA device")
+        model = AutoModelForCausalLM.from_pretrained(
+            str(model_path),
+            model_type="llama",
+            gpu_layers=50,  # Adjust based on your needs
+            context_length=2048,
+            temperature=0.7,
+            top_p=0.95
+        )
+    # For CPU
+    else:
+        logger.info("Using CPU device")
+        model = AutoModelForCausalLM.from_pretrained(
+            str(model_path),
+            model_type="llama",
+            gpu_layers=0,
+            context_length=2048,
+            temperature=0.7,
+            top_p=0.95
+        )
     logger.info("Model loaded successfully!")
 except Exception as e:
     logger.error(f"Error loading model: {str(e)}")
@@ -82,6 +126,21 @@ def generate():
         
         # Use keyword-based classification
         category, confidence = classify_text(text)
+        
+        # Format prompt for TinyLlama
+        formatted_prompt = f"<|system|>You are a helpful AI assistant.</s><|user|>{text}</s><|assistant|>"
+        
+        # Generate response using the model
+        response = model(
+            formatted_prompt,
+            max_new_tokens=256,
+            temperature=0.7,
+            top_p=0.95,
+            stream=False
+        )
+        
+        # Clean up response
+        response = response.split("<|assistant|>")[-1].strip()
         
         # Generate explanation based on category
         explanations = {

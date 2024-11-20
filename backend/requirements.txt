@@ -1,0 +1,23 @@
+# Core Python Libraries
+torch>=2.0.0
+flask>=2.3.2
+flask-cors==3.0.10
+requests==2.31.0
+tqdm==4.66.1
+pathlib
+typing
+
+# Model and Inference Libraries
+ctransformers>=0.2.5
+transformers>=4.30.0
+huggingface_hub
+
+# Utility Libraries
+hashlib
+json
+logging
+datetime
+
+# Optional but recommended
+argparse
+lru_cache
