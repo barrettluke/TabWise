@@ -1,6 +1,5 @@
-<h1>
-  <img src="images/Tabwise.png" alt="Folder with blue background and circuits on the folder" width="50" style="vertical-align:middle;"> Tabwise Chrome Extension
-</h1>
+!![Folder with blue background and circuits on the folder](images/Tabwise.png)
+# Tabwise Chrome Extension
 
 **Tabwise** is a Chrome extension designed to enhance your browsing experience by categorizing tabs into common categories (e.g., e-commerce, sports, social) and generating summaries using AI models. The extension leverages local AI inference as well as Gemini Nano's experimental summarization capabilities.
 
