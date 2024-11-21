@@ -91,3 +91,12 @@ body {
   margin: 0;
   font-size: 16px;
 }
+
+.clickable-tab {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.clickable-tab:hover {
+  background-color: #f0f0f0;
+}

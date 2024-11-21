@@ -1,0 +1,748 @@
+# Category definitions with their associated keywords
+categories:
+  E-commerce/Marketplace:
+    - marketplace
+    - buyers
+    - sellers
+    - shop
+    - store
+    - purchase
+    - sell
+    - buy
+    - auction
+    - bid
+    - listing
+    - e-commerce
+    - sale
+    - spend
+    - marketing
+
+  Technology/IoT:
+    - GPS
+    - tracking
+    - device
+    - sensor
+    - IoT
+    - real-time
+    - hardware
+    - monitor
+    - AI
+    - machine learning
+    - automation
+    - robotics
+
+  Weather/Climate:
+    - weather
+    - climate
+    - forecast
+    - meteorological
+    - atmospheric
+    - prediction
+    - satellite
+    - temperature
+    - humidity
+    - precipitation
+    - weather patterns
+
+  Blockchain/Crypto:
+    - blockchain
+    - crypto
+    - cryptocurrency
+    - cryptocurranices
+    - bitcoin
+    - ethereum
+    - smart contract
+    - decentralized
+    - ledger
+    - token
+    - mining
+    - wallet
+    - exchange
+    - digital currency
+    - NFT
+    - DeFi
+    - ICO
+    - DApp
+    - DAO
+    - staking
+    - yield farming
+    - consensus
+    - proof of work
+    - proof of stake
+    - scalability
+ 
+  Social Media:
+    - social media
+    - social network
+    - social
+    - platform
+    - user
+    - post
+    - share
+    - like
+    - comment
+    - follow
+    - friend
+    - message
+    - notification
+    - feed
+    - profile
+    - group
+    - tag
+    - hashtag
+    - viral
+    - influencer
+    - engagement
+    - content
+    - filter
+    - audience
+    - community
+    - trend
+    - meme
+    - viral
+    - influencer
+
+  Productivity:
+    - productivity
+    - task
+    - tasks
+    - to-do
+    - calendar
+    - schedule
+    - reminder
+    - note
+    - project
+    - time management
+    - goal
+    - habit
+    - routine
+    - focus
+    - motivation
+    - progress
+    - deadline
+    - efficiency
+    - organization
+    - collaboration
+    - teamwork
+    - communication
+    - workflow
+    - automation
+    - management
+
+  Entertainment:
+    - entertainment
+    - music
+    - movie
+    - video
+    - streaming
+    - TV
+    - show
+    - series
+    - film
+    - game
+    - gaming
+    - play
+    - watch
+    - listen
+    - read
+    - artist
+    - actor
+    - director
+    - producer
+    - writer
+    - musician
+    - band
+    - concert
+    - festival
+    - award
+    - performance
+    - audience
+    - fan
+    - celebrity
+    - influencer
+    - content
+    - viral
+    - meme
+    - trend
+
+  Health/Medical:
+    - health
+    - medical
+    - doctor
+    - patient
+    - hospital
+    - healthcare
+    - provider
+    - insurance
+    - coverage
+    - treatment
+    - diagnosis
+    - medication
+    - prescription
+    - therapy
+    - surgery
+    - recovery
+    - rehabilitation
+    - prevention
+    - wellness
+
+
+  Communication:
+    - communication
+    - message
+    - chat
+    - conversation
+    - call
+    - video call
+    - voice call
+    - email
+    - text
+    - voice
+    - contact
+    - connect
+  
+  News:
+    - news
+    - headline
+    - article
+    - story
+    - report
+    - journalist
+    - press
+    - media
+    - publication
+    - newspaper
+    - magazine
+    - blog
+    - website
+    - radio
+    - TV
+    - broadcast
+    - live
+    - breaking news
+    - local news
+    - national news
+    - international news
+    - politics
+    - culture
+    - lifestyle
+    - opinion
+    - analysis
+    - commentary
+    - editorial
+    - feature
+    - interview
+    - investigation
+    - research
+    - fact
+    - fiction
+    - truth
+    - accuracy
+    - credibility
+    - reliability
+    - trust
+    - transparency
+    - accountability
+    - freedom of speech
+    - democracy
+    - journalism
+    - media literacy
+    - information
+    - knowledge
+    - awareness
+    - education
+    - learning
+    - understanding
+    - perspective
+    - insight
+    - opinion
+    - viewpoint
+    - bias
+    - propaganda
+    - misinformation
+    - disinformation
+    - fake news
+    - clickbait
+    - sensationalism
+    - tabloid
+    - rumor
+    - gossip
+    - scandal
+    - controversy
+    - conflict
+    - crisis
+    - disaster
+    - emergency
+    - tragedy
+    - crime
+    - violence
+    - war
+    - peace
+    - security
+    - defense
+    - diplomacy
+    - negotiation
+    - agreement
+    - treaty
+    - alliance
+    - partnership
+    - cooperation
+    - collaboration
+    - competition
+    - rivalry
+    - conflict
+    - dispute
+    - argument
+    - debate
+    - discussion
+    - conversation
+    - dialogue
+    - exchange
+    - interaction
+    - relationship
+    - connection
+    - network
+    - community
+    - society
+    - culture
+    - tradition
+    - heritage
+    - identity
+    - diversity
+    - inclusion
+    - equality
+    - equity
+    - justice
+    - freedom
+    - democracy
+    
+  Education:
+    - education
+    - learning
+    - school
+    - student
+    - teacher
+    - classroom
+    - lesson
+    - lecture
+    - course
+    - curriculum
+    - syllabus
+    - textbook
+    - assignment
+    - homework
+    - exam
+    - test
+    - quiz
+    - grade
+    - report card
+    - diploma
+    - degree
+    - certificate
+    - graduation
+    - university
+    - college
+    - institute
+    - academy
+    - training
+    - workshop
+    - seminar
+    - conference
+    - convention
+    - symposium
+    - summit
+    - forum
+    - meeting
+    - event
+    - program
+    - project
+    - research
+    - study
+    - investigation
+    - analysis
+
+  Finance:
+    - finance
+    - financial
+    - money
+    - investment
+    - investor
+    - stock
+    - market
+    - trading
+    - exchange
+    - currency
+    - forex
+    - cryptocurrency
+    - bitcoin
+    - ethereum
+    - blockchain
+    - wallet
+    - token
+    - DeFi
+    - NFT
+    - ICO
+    - DApp
+    - DAO
+    - staking
+    - yield farming
+    - lending
+    - borrowing
+    - saving
+    - spending
+    - budget
+    - expense
+    - income
+    - profit
+    - loss
+    - risk
+    - return
+    - reward
+    - interest
+    - dividend
+    - capital
+    - asset
+    - liability
+    - equity
+    - debt
+    - credit
+    - loan
+    - mortgage
+    - insurance
+    - tax
+    - fee
+    - commission
+    - charge
+    - payment
+    - transaction
+    - transfer
+    - deposit
+    - withdrawal
+    - balance
+    - statement
+    - account
+    - credit card
+    - debit card
+    - bank
+    - branch
+    - ATM
+    - online banking
+    - mobile banking
+    - investment banking
+    - commercial banking
+    - retail banking
+    - private banking
+    - personal finance
+    - corporate finance
+    - public finance
+    - government finance
+    - central bank
+    - monetary policy
+    - fiscal policy
+    - regulation
+    - compliance
+    - audit
+    - accounting
+    - bookkeeping
+
+  Travel:
+    - travel
+    - tourism
+    - tourist
+    - destination
+    - trip
+    - journey
+    - adventure
+    - experience
+    - explore
+    - discover
+    - visit
+    - sightseeing
+    - attraction
+    - landmark
+    - culture
+    - heritage
+    - tradition
+    - festival
+    - event
+    - celebration
+    - vacation
+    - holiday
+    - getaway
+    - escape
+    - relaxation
+    - rejuvenation
+    - recreation
+    - leisure
+    - entertainment
+    - activity
+    - adventure
+    - nature
+    - wildlife
+    - environment
+    - sustainability
+    - eco-friendly
+    - responsible
+    - ethical
+    - local
+    - community
+    - culture
+    - tradition
+    - heritage
+    - identity
+    - diversity
+    - inclusion
+    - equality
+    - equity
+    - justice
+    - freedom
+    - democracy
+    - peace
+    - security
+    - diplomacy
+    - negotiation
+    - agreement
+    - treaty
+    - alliance
+    - partnership
+    - cooperation
+    - collaboration
+    - competition
+    - rivalry
+    - conflict
+    - dispute
+    - argument
+    - debate
+    - discussion
+    - conversation
+    - dialogue
+    - exchange
+    - interaction
+    - relationship
+    - connection
+    - network
+    - community
+    - society
+    - culture
+    - tradition
+    - heritage
+    - identity
+    - diversity
+    - inclusion
+    - equality
+    - equity
+    - justice
+    - freedom
+    - democracy
+
+  Food:
+    - food
+    - beverage
+    - restaurant
+    - cafe
+    - bar
+    - pub
+    - bakery
+    - deli
+    - grocery
+    - supermarket
+    - market
+    - food truck
+    - food court
+    - food hall
+    - food delivery
+    - meal
+    - dish
+    - cuisine
+    - recipe
+    - menu
+    - chef
+    - cook
+    - baker
+    - barista
+    - mixologist
+    - sommelier
+    - server
+    - host
+    - guest
+    - customer
+    - client
+    - patron
+    - diner
+    - eater
+    - drinker
+    - foodie
+    - gourmet
+    - connoisseur
+    - critic
+    - review
+    - rating
+    - recommendation
+    - reservation
+    - order
+    - delivery
+    - takeout
+    - pickup
+    - dine-in
+    - table
+    - chair
+    - booth
+    - counter
+    - bar
+    - lounge
+    - patio
+    - terrace
+    - garden
+    - view
+    - ambiance
+    - decor
+    - music
+    - entertainment
+    - service
+    - hospitality
+    - experience
+    - satisfaction
+    - quality
+    - freshness
+    - flavor
+    - taste
+    - aroma
+    - texture
+    - presentation
+    - portion
+
+  Space/Aerospace:
+    - space
+    - aerospace
+    - rocket
+    - satellite
+    - spacecraft
+    - space station
+    - astronaut
+    - cosmonaut
+    - space agency
+    - satellite
+    - telescope
+    - observatory
+    - planetarium
+    - universe
+    - galaxy
+    - solar system
+    - star
+    - planet
+    - asteroid
+    - comet
+    - meteor
+    - constellation
+    - moon
+    - sun
+    - celestial
+    - orbit
+    - gravity
+    - spacecraft
+
+  Sports:
+    - sports
+    - athlete
+    - coach
+    - team
+    - player
+    - game
+    - match
+    - competition
+    - tournament
+    - league
+    - championship
+    - season
+    - achievement
+    - victory
+    - defeat
+    - win
+    - loss
+    - draw
+    - tie
+    - score
+    - point
+    - goal
+    - basket
+    - touchdown
+    - home run
+    - strike
+    - foul
+    - penalty
+    - foul
+    - free throw
+    - corner kick
+    - goal kick
+    - penalty kick
+    - serve
+    - volley
+    - smash
+    - rally
+    - match point
+    - championship point
+    - game point
+    - set point
+    - tiebreak
+    - sudden death
+    - overtime
+    - playoff
+    - wildcard
+  
+  Fitness:
+    - fitness
+    - exercise
+    - workout
+    - training
+    - gym
+    - fitness center
+    - health club
+    - personal trainer
+    - coach
+    - strength
+    - endurance
+    - flexibility
+    - agility
+    - balance
+    - coordination
+    - speed
+    - power
+    - intensity
+    - resistance
+    - weight
+    - cardio
+    - aerobic
+    - anaerobic
+    - muscle
+    - core
+    - abs
+    - back
+    - chest
+    - arms
+    - legs
+    - shoulders
+    - glutes
+    - quads
+    - hamstrings
+    - calves
+    - biceps
+    - triceps
+    - deltoids
+    - lats
+    - traps
+    - rhomboids
+    - obliques
+    - transverse
+    - rectus
+    - serratus
+    - pectorals
+    - abdominals
+    - quadriceps
+    - hamstrings
+    - calves
+    - biceps
+    - triceps
+    - deltoids
+    - lats
+    - traps
+    - rhomboids

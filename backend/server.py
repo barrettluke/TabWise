@@ -5,12 +5,16 @@ from pathlib import Path
 from flask_cors import CORS
 import logging
 from utils.model_manager import ModelManager
+from utils.config import load_category_keywords
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
+
+# Load categories from config file
+CATEGORY_KEYWORDS = load_category_keywords()
 
 
 # Initialize the ModelManager
@@ -37,26 +41,6 @@ else:
     device = torch.device("cpu")
     logger.info("Using CPU device")
 
-# Define categories with keywords
-CATEGORY_KEYWORDS = {
-    "E-commerce/Marketplace": ["marketplace", "buyers", "sellers", "shop", "store", "purchase", "sell", "buy", "auction", "bid", "listing", "e-commerce", "sale", "spend", "marketing"],
-    "Technology/IoT": ["GPS", "tracking", "device", "sensor", "IoT", "real-time", "hardware", "monitor"],
-    "Weather/Climate": ["weather", "climate", "forecast", "meteorological", "atmospheric", "prediction", "satellite", "temperature", "humidity", "precipitation", "weather patterns"],
-    "Blockchain/Crypto": ["blockchain", "crypto", "NFT", "token", "mint", "cryptocurrency", "decentralized", "ledger", "smart contract", "digital asset", "wallet", "miners", "cryptocurrencies"],
-    "Social Media": ["social", "posts", "sharing", "friends", "network", "community"],
-    "Productivity": ["workflow", "efficiency", "tools", "organization", "tasks", "management"],
-    "Entertainment": ["games", "music", "video", "streaming", "play", "watch"],
-    "Healthcare": ["health", "medical", "wellness", "patient", "doctor", "treatment", "diagnosis", "hospital", "clinic", "pharmacy", "medicine", "prescription", "Healthcare"],
-    "Communication": ["chat", "message", "communication", "contact", "connect"],
-    "News": ["news", "articles", "updates", "information", "current events", "newsletter", "journalism", "reporting", "breaking news", "News"],
-    "Education": ["learning", "learn","teaching", "education", "students", "teachers", "courses", "classes", "tutorials", "lessons", "curriculum"],
-    "Finance": ["finance", "investment", "banking", "money", "stocks", "trading", "economy", "financial"],
-    "Travel": ["travel", "tourism", "destination", "vacation", "trip", "hotel", "flight", "booking", "reservations"],
-    "Food": ["food", "restaurant", "cuisine", "recipe", "cooking", "dining", "menu", "ingredients", "meal"],
-    "Space/Aerospace": ["satellite", "space", "orbit", "launch", "rocket", "spacecraft", "astronomical", "aerospace", "constellation", "celestial", "planetary", "mission", "astronomy"],
-    "Sports": ["sports", "game", "match", "team", "player", "score", "tournament", "championship", "league", "athletes", "competition", "Sports", "athletics", "playoffs", "players"],
-
-}
 
 def classify_text(text):
     text = text.lower()
@@ -78,31 +62,46 @@ def classify_text(text):
 # Initialize model with ctransformers
 try:
     logger.info("Starting to load model...")
-    model_path = Path("./models/tinyllama")  # Path to your downloaded GGUF file
+    model_path = Path("./models/tinyllama")
     
-    # For Mac with Metal support
+    # Start with CPU by default for more stability
+    gpu_layers = 0
+    
     if torch.backends.mps.is_available():
-        logger.info("Using MPS (Apple Silicon) device")
-        model = AutoModelForCausalLM.from_pretrained(
-            str(model_path),
-            model_type="llama",
-            gpu_layers=50,  # Adjust based on your needs
-            context_length=2048,
-            temperature=0.7,
-            top_p=0.95
-        )
-    # For CUDA
+        try:
+            logger.info("Attempting to use MPS (Apple Silicon) device...")
+            # Reduce GPU layers to prevent memory issues
+            gpu_layers = 32  # Reduced from 50
+            model = AutoModelForCausalLM.from_pretrained(
+                str(model_path),
+                model_type="llama",
+                gpu_layers=gpu_layers,
+                context_length=2048,
+                temperature=0.7,
+                top_p=0.95
+            )
+            logger.info("Successfully initialized model with MPS")
+        except Exception as e:
+            logger.warning(f"Failed to initialize with MPS, falling back to CPU: {e}")
+            gpu_layers = 0
+            model = AutoModelForCausalLM.from_pretrained(
+                str(model_path),
+                model_type="llama",
+                gpu_layers=0,
+                context_length=2048,
+                temperature=0.7,
+                top_p=0.95
+            )
     elif torch.cuda.is_available():
         logger.info("Using CUDA device")
         model = AutoModelForCausalLM.from_pretrained(
             str(model_path),
             model_type="llama",
-            gpu_layers=50,  # Adjust based on your needs
+            gpu_layers=50,
             context_length=2048,
             temperature=0.7,
             top_p=0.95
         )
-    # For CPU
     else:
         logger.info("Using CPU device")
         model = AutoModelForCausalLM.from_pretrained(
@@ -113,7 +112,7 @@ try:
             temperature=0.7,
             top_p=0.95
         )
-    logger.info("Model loaded successfully!")
+    logger.info(f"Model loaded successfully with {gpu_layers} GPU layers!")
 except Exception as e:
     logger.error(f"Error loading model: {str(e)}")
     raise
@@ -151,7 +150,7 @@ def generate():
             "Social Media": "This text describes social networking features.",
             "Productivity": "This text involves tools for improving efficiency.",
             "Entertainment": "This text relates to entertainment content.",
-            "Healthcare": "This text involves health-related services.",
+            "Health/Medical": "This text involves health-related services.",
             "Communication": "This text describes communication features.",
             "News": "This text involves news articles or updates.",
             "Education": "This text relates to educational content or learning resources.",
@@ -160,6 +159,7 @@ def generate():
             "Food": "This text relates to food, recipes, or dining experiences.",
             "Space/Aerospace": "This text involves space exploration or aerospace technology.",
             "Sports": "This text describes sports events or competitions.",
+            "Fitness": "This text involves fitness activities or wellness programs.",
             "Other": "This text doesn't clearly match our predefined categories."
         }
         

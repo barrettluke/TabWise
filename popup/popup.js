@@ -1,5 +1,17 @@
 // popup.js
 
+// function to handle tab navigation
+function navigateToTab(tabId) {
+    if (tabId) {
+        chrome.tabs.update(parseInt(tabId), { active: true }, () => {
+            // Optional: Also bring the window with this tab to the foreground
+            chrome.tabs.get(parseInt(tabId), (tab) => {
+                chrome.windows.update(tab.windowId, { focused: true });
+            });
+        });
+    }
+}
+
 function createTabCard(tabData) {
     let summaryHtml = tabData.summary
         .split('\n')
@@ -16,7 +28,7 @@ function createTabCard(tabData) {
     summaryHtml = summaryHtml.includes('<li>') ? `<ul>${summaryHtml}</ul>` : summaryHtml;
 
     return `
-        <div class="tab-card" data-tab-id="${tabData.tab?.id || ''}">
+        <div class="tab-card ${tabData.tab?.id ? 'clickable-tab' : ''}" data-tab-id="${tabData.tab?.id || ''}">
             <div class="title">${tabData.title}</div>
             <div>
                 <span class="category">${tabData.category}</span>
@@ -27,6 +39,22 @@ function createTabCard(tabData) {
             <div class="timestamp">Analyzed: ${new Date(tabData.timestamp).toLocaleString()}</div>
         </div>
     `;
+}
+
+function handleTabCardClick(event) {
+    const tabId = event.currentTarget.dataset.tabId;
+    if (tabId) {
+        navigateToTab(parseInt(tabId));
+    }
+}
+
+function navigateToTab(tabId) {
+    chrome.tabs.update(tabId, { active: true }, () => {
+        // Bring the window with this tab to the foreground
+        chrome.tabs.get(tabId, (tab) => {
+            chrome.windows.update(tab.windowId, { focused: true });
+        });
+    });
 }
 
 function groupTabsByCategory(tabs, storedData) {
@@ -112,9 +140,16 @@ function updatePopup(forceRefresh = false) {
 }
 
 function setupEventListeners() {
+    // Category header click listeners
     document.querySelectorAll('.category-header').forEach(header => {
-        header.removeEventListener('click', handleCategoryClick); // Remove old listener
-        header.addEventListener('click', handleCategoryClick); // Add new listener
+        header.removeEventListener('click', handleCategoryClick);
+        header.addEventListener('click', handleCategoryClick);
+    });
+
+    // Tab navigation listeners
+    document.querySelectorAll('.clickable-tab').forEach(tabCard => {
+        tabCard.removeEventListener('click', handleTabCardClick);
+        tabCard.addEventListener('click', handleTabCardClick);
     });
 }
 
