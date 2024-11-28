@@ -71,12 +71,12 @@ try:
         try:
             logger.info("Attempting to use MPS (Apple Silicon) device...")
             # Reduce GPU layers to prevent memory issues
-            gpu_layers = 32  # Reduced from 50
+            gpu_layers = 4  # Reduced from 50
             model = AutoModelForCausalLM.from_pretrained(
                 str(model_path),
                 model_type="llama",
                 gpu_layers=gpu_layers,
-                context_length=2048,
+                context_length=1024,
                 temperature=0.7,
                 top_p=0.95
             )

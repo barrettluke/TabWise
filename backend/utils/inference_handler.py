@@ -4,6 +4,8 @@ from ctransformers import AutoModelForCausalLM
 import logging
 from typing import Optional, Dict
 from pathlib import Path
+import gc
+
 
 class InferenceHandler:
     def __init__(self, model_path: Path, 
@@ -27,7 +29,17 @@ class InferenceHandler:
         self.temperature = temperature
         self.top_p = top_p
         self.model = None
+    
+    def __del__(self):
+        self._cleanup()
         
+    def _cleanup(self):
+        """Cleanup resources to avoid GPU/CPU leaks"""
+        if self.model:
+            del self.model
+            self.model = None
+        gc.collect()
+    
     def load_model(self):
         """Load the GGUF model"""
         try:
@@ -39,10 +51,28 @@ class InferenceHandler:
                 temperature=self.temperature,
                 top_p=self.top_p
             )
-            logging.info(f"Successfully loaded model from {self.model_path}")
+            logging.info(f"Successfully loaded model from {self.model_path} with GPU layers: {self.gpu_layers}")
             return True
         except Exception as e:
-            logging.error(f"Error loading model: {str(e)}")
+            logging.error(f"Error loading model with GPU layers: {str(e)}. Retrying on CPU.")
+            self._cleanup()  # Free GPU resources if they were partially allocated
+            return self._load_model_on_cpu()
+
+    def _load_model_on_cpu(self):
+        """Load the model with CPU-only fallback"""
+        try:
+            self.model = AutoModelForCausalLM.from_pretrained(
+                str(self.model_path),
+                model_type="llama",
+                context_length=self.context_length,
+                gpu_layers=0,  # Force CPU-only
+                temperature=self.temperature,
+                top_p=self.top_p
+            )
+            logging.info(f"Successfully loaded model on CPU from {self.model_path}")
+            return True
+        except Exception as cpu_e:
+            logging.error(f"Failed to load model on CPU: {str(cpu_e)}")
             return False
             
     def generate_response(self, 
@@ -92,4 +122,4 @@ class InferenceHandler:
 
     def __del__(self):
         """Cleanup when the handler is destroyed"""
-        self.model = None
+        self._cleanup()

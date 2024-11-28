@@ -16,6 +16,33 @@ categories:
     - sale
     - spend
     - marketing
+    - discount
+    - promotion
+    - department store
+    - online shopping
+    - shopping cart
+    - checkout
+    - retailor
+    - wholesaler
+    - distributor
+    - rewards
+    - loyalty
+    - customer
+    - online payment
+    - online transaction
+    - shipping
+    - purchase items online
+    - online store
+    - online marketplace
+    - online auction
+    - online bidding
+    - online listing
+    - retail store
+    - online retailer
+    - shopping
+    - online shopping
+    - shopping online
+
 
   Technology/IoT:
     - GPS
@@ -30,6 +57,28 @@ categories:
     - machine learning
     - automation
     - robotics
+    - OS
+    - software
+    - app
+    - web
+    - mobile
+    - cloud
+    - server
+    - laptop
+    - desktop
+    - tablet
+    - smartphone
+    - smartwatch
+    - VR
+    - AR
+    - Wi-Fi
+    - Bluetooth
+    - NFC
+    - RFID
+    - 5G
+    - 4G
+    - LTE
+
 
   Weather/Climate:
     - weather
@@ -746,3 +795,76 @@ categories:
     - lats
     - traps
     - rhomboids
+  
+  Fashion & Apparel:
+    - fashion
+    - apparel
+    - clothing
+    - garment
+    - outfit
+    - style
+    - designer
+    - brand
+    - collection
+    - season
+    - runway
+    - model
+    - fabric
+    - material
+    - texture
+    - shoes
+    - sneakers
+    - boots
+    - sandals
+    - heels
+    - flats
+    - loafers
+    - oxfords
+    - shirt
+    - t-shirt
+    - blouse
+    - tanktop
+    - sweater
+    - cardigan
+    - hoodie
+    - jacket
+    - coat
+    - pants
+    - jeans
+    - trousers
+    - shorts
+    - skirt
+    - dress
+    - gown
+    - suit
+    - tie
+    - bowtie
+    - scarf
+    - hat
+    - cap
+    - beanie
+    - beret
+    - fedora
+    - sunglasses
+    - eyeglasses
+    - watch
+    - bracelet
+    - necklace
+    - ring
+    - earring
+    - handbag
+    - purse
+    - Jean
+    - Tapered leg
+    - Straight leg
+    - Bootcut
+    - Flare
+    - Skinny
+    - Slim
+    - Relaxed
+    - High-waisted
+    - Mid-rise
+    - Low-rise
+    - Cropped
+    - Athletic fit
+
